@@ -1,0 +1,754 @@
+<title>QLIP Redesign</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0b;
+    --bg-raised: #131315;
+    --ink: #f2ede2;
+    --ink-dim: #8a877e;
+    --ink-faint: #504e48;
+    --line: #232226;
+    --accent: #3ED6C4;
+    --accent-dim: #1F6B62;
+    --font-display: 'Archivo', 'Arial Black', sans-serif;
+    --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #0a0a0b; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 32px;
+    mix-blend-mode: difference;
+  }
+  .nav-mark {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-mark::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .nav-links a { opacity: 0.7; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    isolation: isolate;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    overflow: hidden;
+  }
+  .hero-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-video .video-mobile { display: none; }
+  @media (max-aspect-ratio: 1/1) {
+    .hero-video .video-desktop { display: none; }
+    .hero-video .video-mobile { display: block; }
+  }
+  #grain {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.35;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(62,214,196,0.08), transparent 70%),
+      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(10,10,11,0.72) 45%, rgba(10,10,11,0.92) 100%);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 28px;
+  }
+  .eyebrow strong { color: var(--accent); font-weight: 500; }
+
+  .wordmark {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(72px, 16vw, 220px);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    color: var(--ink);
+  }
+  .wordmark .echo {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink-faint);
+  }
+  .wordmark .echo:nth-child(1) { transform: translateX(6px) scaleX(1.02); opacity: 0.55; }
+  .wordmark .echo:nth-child(2) { transform: translateX(14px) scaleX(1.045); opacity: 0.32; }
+  .wordmark .echo:nth-child(3) { transform: translateX(23px) scaleX(1.07); opacity: 0.16; }
+  .wordmark .echo:nth-child(4) { transform: translateX(33px) scaleX(1.095); opacity: 0.08; -webkit-text-stroke-color: var(--accent-dim); }
+
+  .hero-tagline {
+    margin-top: 36px;
+    max-width: 560px;
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-dim);
+    font-weight: 400;
+  }
+  .hero-tagline strong { color: var(--ink); font-weight: 500; }
+
+  .hero-cta {
+    margin-top: 44px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 26px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .btn-solid { background: var(--ink); color: #0a0a0b; border-color: var(--ink); }
+  .btn-solid:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost:hover { border-color: var(--ink-dim); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .scroll-cue .line { width: 1px; height: 28px; background: linear-gradient(var(--ink-faint), transparent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* ---------- TICKER ---------- */
+  .ticker-band {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    overflow: hidden;
+    background: var(--bg-raised);
+  }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 32s linear infinite;
+  }
+  .ticker-track span {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 0 28px;
+    white-space: nowrap;
+  }
+  .ticker-track span em { color: var(--accent); font-style: normal; padding-right: 28px; }
+  @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section { padding: 140px 0; position: relative; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 64px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-index {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 56px);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .section-title .accent { color: var(--accent); }
+  .section-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    text-align: right;
+    max-width: 260px;
+    line-height: 1.6;
+  }
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.3fr;
+    gap: 64px;
+    margin-bottom: 72px;
+  }
+  .manifesto-insight {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2.3vw, 27px);
+    line-height: 1.42;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+    align-self: start;
+    position: sticky;
+    top: 110px;
+  }
+  .manifesto-copy p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink-dim);
+    margin-bottom: 26px;
+    max-width: 640px;
+  }
+  .manifesto-copy p:last-child { margin-bottom: 0; }
+  .manifesto-copy strong { color: var(--ink); font-weight: 500; }
+  .manifesto-closer {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(26px, 4vw, 46px);
+    line-height: 1.18;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    border-top: 1px solid var(--line);
+    padding-top: 44px;
+  }
+
+  /* ---------- REEL ---------- */
+  .reel-frame {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #1a1a1c, #0d0d0e);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .reel-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 48px);
+  }
+  .play-btn {
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, background 0.25s;
+    background: rgba(10,10,11,0.4);
+    backdrop-filter: blur(6px);
+  }
+  .play-btn:hover { transform: scale(1.08); border-color: var(--accent); background: rgba(62,214,196,0.12); }
+  .play-btn svg { margin-left: 4px; }
+  .reel-meta {
+    position: absolute;
+    bottom: 18px; left: 22px; right: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+  }
+  .reel-meta .rec { color: var(--accent); display: flex; align-items: center; gap: 6px; }
+  .reel-meta .rec::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
+
+  /* ---------- CAPABILITIES ---------- */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .cap-card {
+    background: var(--bg);
+    padding: 36px 28px;
+    transition: background 0.25s;
+  }
+  .cap-card:hover { background: var(--bg-raised); }
+  .cap-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 40px;
+  }
+  .cap-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .cap-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-dim);
+  }
+
+  /* ---------- WORK GRID ---------- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .work-card {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--bg-raised);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .work-card .swatch {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--sw1), var(--sw2));
+    opacity: 0.85;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1), opacity 0.4s;
+  }
+  .work-card:hover .swatch { transform: scale(1.06); opacity: 1; }
+  .work-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, transparent 45%);
+  }
+  .work-info {
+    position: absolute;
+    left: 22px; bottom: 20px; right: 22px;
+    z-index: 2;
+  }
+  .work-code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .work-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+  }
+  .work-type {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-top: 4px;
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  .process-step .step-no {
+    font-family: var(--font-mono);
+    font-size: 44px;
+    color: var(--ink-faint);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .process-step h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .process-step p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta {
+    text-align: center;
+    padding: 160px 0 100px;
+  }
+  .cta-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(40px, 7vw, 92px);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cta-title .accent { color: var(--accent); }
+  .cta-email {
+    display: inline-block;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cta-email:hover { color: var(--accent); border-color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+  }
+  footer .fmark { display: flex; align-items: center; gap: 8px; }
+  footer .fmark::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+
+  @media (max-width: 860px) {
+    .manifesto-grid { grid-template-columns: 1fr; gap: 32px; }
+    .manifesto-insight { position: static; }
+  }
+
+  @media (max-width: 720px) {
+    .section-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .section-meta { text-align: left; max-width: none; }
+    .work-grid { grid-template-columns: 1fr; }
+    .process-strip { grid-template-columns: 1fr; gap: 48px; }
+    section { padding: 90px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track, .scroll-cue .line, .reel-meta .rec::before { animation: none !important; }
+  }
+</style>
+
+<nav>
+  <div class="nav-mark">QLIP · MOTION + VFX</div>
+  <div class="nav-links">
+    <a href="#manifesto">Manifest</a>
+    <a href="#reel">Reel</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-video">
+    <video class="video-desktop" autoplay muted loop playsinline>
+      <source src="/assets/poziom.mp4" type="video/mp4">
+    </video>
+    <video class="video-mobile" autoplay muted loop playsinline>
+      <source src="/assets/pion.mp4" type="video/mp4">
+    </video>
+  </div>
+  <canvas id="grain"></canvas>
+  <div class="eyebrow">Warszawa · Studio VFX &amp; motion &nbsp;<strong>— dost&#281;pni od zaraz</strong></div>
+  <h1 class="wordmark">
+    <span class="echo">qlip</span>
+    <span class="echo">qlip</span>
+    <span class="echo">qlip</span>
+    <span class="echo">qlip</span>
+    qlip
+  </h1>
+  <p class="hero-tagline">Kompozyty, tracking i 3D dla materia&#322;u, kt&oacute;ry musi wytrzyma&#263; ka&#380;d&#261; klatk&#281; w 4K. <strong>Robimy niewidzialne efekty widoczne dopiero, gdy je wy&#322;&#261;czysz.</strong></p>
+  <div class="hero-cta">
+    <a href="#reel" class="btn btn-solid">Zobacz reel</a>
+    <a href="#contact" class="btn btn-ghost">Napisz do nas</a>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</header>
+
+<div class="ticker-band">
+  <div class="ticker-track">
+    <span><em>01</em>Compositing<em>02</em>Roto &amp; Tracking<em>03</em>3D &amp; CG<em>04</em>Matte Painting<em>05</em>Clean-up &amp; Screen Replacement<em>06</em>Color</span>
+    <span><em>01</em>Compositing<em>02</em>Roto &amp; Tracking<em>03</em>3D &amp; CG<em>04</em>Matte Painting<em>05</em>Clean-up &amp; Screen Replacement<em>06</em>Color</span>
+  </div>
+</div>
+
+<section id="manifesto">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-index">[ 01 / MANIFEST ]</div>
+        <div class="section-title">Do&#347;wiadczenie du&#380;ego studia.<br>Uwa&#380;no&#347;&#263; ma&#322;ego <span class="accent">butiku</span>.</div>
+      </div>
+    </div>
+    <div class="manifesto-grid">
+      <p class="manifesto-insight">Klient przychodzi z problemem i u nas — w przeciwie&#324;stwie do molochów — rozmawia z lud&#378;mi, kt&oacute;rzy potrafi&#261; ten problem rozwi&#261;za&#263; kreatywnie, a nie tylko mechanicznie. Technicznie, a potem ci sami ludzie go realizuj&#261;.</p>
+      <div class="manifesto-copy">
+        <p>Nie jeste&#347;my fabryk&#261; VFX. Od 20 lat robimy rzeczy, na kt&oacute;re wtedy nawet nie by&#322;o jeszcze nazwy — dzi&#347; nazywaj&#261; si&#281; VFX, 3D, compositing, motion, AI. <strong>Narz&#281;dzia si&#281; zmieniaj&#261; nieustannie, talent i zaanga&#380;owanie s&#261; niezmienne.</strong></p>
+        <p>Nie mamy armii producent&oacute;w, pi&#281;ciu szczebli akceptacji i spotka&#324; o spotkaniach — za to mamy ludzi, kt&oacute;rzy odbieraj&#261; telefon od klienta, a chwil&#281; p&oacute;&#378;niej ju&#380; siedz&#261; przy kompozycji, animacji czy renderze, nie gubi&#261;c pomys&#322;u po drodze mi&#281;dzy dzia&#322;ami. Mamy du&#380;e do&#347;wiadczenie zdobyte przy najwi&#281;kszych produkcjach, ale jeste&#347;my mali i elastyczni — z wyboru, nie z przypadku. Mo&#380;emy dzia&#322;a&#263; kameralnie albo zbudowa&#263; zesp&oacute;&#322; pod projekt, kt&oacute;ry wymaga wi&#281;kszej skali. Bez zb&#281;dnej struktury, za to z w&#322;a&#347;ciwymi lud&#378;mi.</p>
+        <p>Lubimy trudne rzeczy. Niemo&#380;liwe jeszcze bardziej. Je&#347;li my&#347;lisz &bdquo;nie wiem, czy da si&#281; to zrobi&#263;&rdquo; — to znaczy, &#380;e dobrze trafi&#322;e&#347;. Nie przywi&#261;zujemy si&#281; do technologii. Bierzemy to, co dzia&#322;a: do&#347;wiadczenie, rzemios&#322;o, VFX, 3D, AI i talent, z pe&#322;n&#261; wolno&#347;ci&#261; my&#347;lenia i sercem w&#322;o&#380;onym w ka&#380;dy projekt.</p>
+      </div>
+    </div>
+    <div class="manifesto-closer">Du&#380;e do&#347;wiadczenie. Ma&#322;a struktura.<br>A najwi&#281;cej — <span class="accent">dobrego obrazu.</span></div>
+  </div>
+</section>
+
+<section id="reel">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-index">[ 02 / DEMO REEL ]</div>
+        <div class="section-title">Zobacz w <span class="accent">ruchu</span></div>
+      </div>
+      <div class="section-meta">Wybrane uj&#281;cia z ostatnich produkcji reklamowych i filmowych. Pe&#322;ny reel na &#380;yczenie.</div>
+    </div>
+    <div class="reel-frame">
+      <div class="play-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#f2ede2"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="reel-meta">
+        <span>QLIP_REEL_2026.MOV</span>
+        <span class="rec">00:00 / 01:32</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-index">[ 03 / CAPABILITIES ]</div>
+        <div class="section-title">Co <span class="accent">robimy</span></div>
+      </div>
+      <div class="section-meta">Ma&#322;y, doświadczony zesp&oacute;&#322; — bez dopisywania w &#322;a&#324;cuchu podwykonawc&oacute;w.</div>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <div class="cap-name">Compositing</div>
+        <div class="cap-desc">Warstwowanie plate&#243;w, integracja CG, grading dopasowany do &#378;r&oacute;d&#322;a.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <div class="cap-name">Roto &amp; Tracking</div>
+        <div class="cap-desc">R&#281;czna rotoskopia i tracking kamery/obiektu tam, gdzie automatyka zawodzi.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <div class="cap-name">3D &amp; CG</div>
+        <div class="cap-desc">Modelowanie, o&#347;wietlenie i render dopasowany do plate'u, nie odwrotnie.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <div class="cap-name">Matte Painting</div>
+        <div class="cap-desc">Rozszerzanie i przebudowa scenografii tam, gdzie kamera nie mo&#380;e si&#281; myli&#263;.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <div class="cap-name">Clean-up</div>
+        <div class="cap-desc">Usuwanie rig&#243;w, znak&#243;w, ekran&oacute;w — podmiana tre&#347;ci bez &#347;ladu.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <div class="cap-name">Color</div>
+        <div class="cap-desc">Sp&oacute;jno&#347;&#263; koloru mi&#281;dzy uj&#281;ciami, plan&#233;m i CG.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-index">[ 04 / SELECTED WORK ]</div>
+        <div class="section-title">Wybrane <span class="accent">produkcje</span></div>
+      </div>
+      <div class="section-meta">Reklama, film i produkcje muzyczne — pe&#322;ne case studies na &#380;yczenie, pod NDA.</div>
+    </div>
+    <div class="work-grid">
+      <div class="work-card" style="--sw1:#3a2a1f; --sw2:#0a0a0b;">
+        <div class="swatch"></div>
+        <div class="work-info">
+          <span class="work-code">SH0530 · REKLAMA</span>
+          <div class="work-title">Zimowa Kampania</div>
+          <div class="work-type">Compositing · Clean-up</div>
+        </div>
+      </div>
+      <div class="work-card" style="--sw1:#1f2a3a; --sw2:#0a0a0b;">
+        <div class="swatch"></div>
+        <div class="work-info">
+          <span class="work-code">A0037 · FILM</span>
+          <div class="work-title">Nocne Miasto</div>
+          <div class="work-type">Roto &amp; Track · Screen Replace</div>
+        </div>
+      </div>
+      <div class="work-card" style="--sw1:#2a1f3a; --sw2:#0a0a0b;">
+        <div class="swatch"></div>
+        <div class="work-info">
+          <span class="work-code">TEST_3D · MUSIC</span>
+          <div class="work-title">Z&#322;ote &#321;zy</div>
+          <div class="work-type">3D &amp; CG · Matte Painting</div>
+        </div>
+      </div>
+      <div class="work-card" style="--sw1:#1f3a2e; --sw2:#0a0a0b;">
+        <div class="swatch"></div>
+        <div class="work-info">
+          <span class="work-code">A0003 · REKLAMA</span>
+          <div class="work-title">Poci&#261;g</div>
+          <div class="work-type">Compositing · Color</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-index">[ 05 / PROCES ]</div>
+        <div class="section-title">Jak <span class="accent">pracujemy</span></div>
+      </div>
+    </div>
+    <div class="process-strip">
+      <div class="process-step">
+        <div class="step-no">01</div>
+        <h3>Wycena i plan</h3>
+        <p>Bid oparty o shotlist, nie o przeczucie — wiesz ile godzin i kiedy dostaniesz pierwszy draft.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-no">02</div>
+        <h3>Iteracja</h3>
+        <p>Cykliczne review z timecode'owanymi uwagami wprost na materiale — bez zgadywania, o kt&oacute;r&#261; klatk&#281; chodzi.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-no">03</div>
+        <h3>Dostawa</h3>
+        <p>Finalne mastery w formacie i przestrzeni barw, jakiej potrzebuje Tw&oacute;j monta&#380;/DI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-title">Zr&oacute;bmy<br>co&#347; <span class="accent">realnego</span>.</div>
+    <a href="mailto:production@qlipvfx.pl" class="cta-email">production@qlipvfx.pl</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <div class="fmark">QLIP STUDIO — MOTION + VFX</div>
+    <div>&copy; 2026 · WARSZAWA, PL</div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var canvas = document.getElementById('grain');
+    var ctx = canvas.getContext('2d');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function drawGrain() {
+      var w = canvas.width, h = canvas.height;
+      var imageData = ctx.createImageData(w, h);
+      var buffer = new Uint32Array(imageData.data.buffer);
+      for (var i = 0; i < buffer.length; i++) {
+        var v = (Math.random() * 255) | 0;
+        var a = (Math.random() * 14) | 0;
+        buffer[i] = (a << 24) | (v << 16) | (v << 8) | v;
+      }
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    if (reduced) {
+      drawGrain();
+    } else {
+      var last = 0;
+      function loop(t) {
+        if (t - last > 90) { drawGrain(); last = t; }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    }
+  })();
+</script>
