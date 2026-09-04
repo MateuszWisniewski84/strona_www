@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>QLIP Redesign</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
@@ -241,6 +242,12 @@
     text-transform: uppercase;
   }
   .section-title .accent { color: var(--accent); }
+  .section-title.echo-title {
+    text-shadow:
+      4px 0 0 rgba(242,237,226,0.10),
+      10px 0 0 rgba(242,237,226,0.06),
+      17px 0 0 rgba(62,214,196,0.05);
+  }
   .section-meta {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -294,7 +301,7 @@
     position: relative;
     aspect-ratio: 16/9;
     border-radius: 4px;
-    background: linear-gradient(135deg, #1a1a1c, #0d0d0e);
+    background: linear-gradient(150deg, #0a0a0b 0%, #0a0a0b 40%, #123c37 78%, #1F6B62 100%);
     border: 1px solid var(--line);
     display: flex;
     align-items: center;
@@ -443,7 +450,9 @@
   /* ---------- CTA / FOOTER ---------- */
   .cta {
     text-align: center;
-    padding: 160px 0 100px;
+    padding: 160px 0 140px;
+    background: var(--accent);
+    color: var(--bg);
   }
   .cta-title {
     font-family: var(--font-display);
@@ -452,20 +461,21 @@
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 1;
+    color: var(--bg);
   }
-  .cta-title .accent { color: var(--accent); }
+  .cta-title .accent { color: var(--bg); }
   .cta-email {
     display: inline-block;
     margin-top: 32px;
     font-family: var(--font-mono);
     font-size: 16px;
     letter-spacing: 0.04em;
-    color: var(--ink-dim);
-    border-bottom: 1px solid var(--line);
+    color: var(--bg);
+    border-bottom: 1px solid rgba(10,10,11,0.35);
     padding-bottom: 4px;
-    transition: color 0.2s, border-color 0.2s;
+    transition: opacity 0.2s, border-color 0.2s;
   }
-  .cta-email:hover { color: var(--accent); border-color: var(--accent); }
+  .cta-email:hover { opacity: 0.65; border-color: var(--bg); }
 
   footer {
     border-top: 1px solid var(--line);
@@ -547,7 +557,7 @@
     <div class="section-head">
       <div>
         <div class="section-index">[ 01 / MANIFEST ]</div>
-        <div class="section-title">Do&#347;wiadczenie du&#380;ego studia.<br>Uwa&#380;no&#347;&#263; ma&#322;ego <span class="accent">butiku</span>.</div>
+        <div class="section-title echo-title">Do&#347;wiadczenie du&#380;ego studia.<br>Uwa&#380;no&#347;&#263; ma&#322;ego <span class="accent">butiku</span>.</div>
       </div>
     </div>
     <div class="manifesto-grid">
@@ -596,32 +606,32 @@
       <div class="cap-card">
         <div class="cap-num">01</div>
         <div class="cap-name">Compositing</div>
-        <div class="cap-desc">Warstwowanie plate&#243;w, integracja CG, grading dopasowany do &#378;r&oacute;d&#322;a.</div>
+        <div class="cap-desc">Obraz sk&#322;ada si&#281; z decyzji. &#321;&#261;czymy je w jedno.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">02</div>
         <div class="cap-name">Roto &amp; Tracking</div>
-        <div class="cap-desc">R&#281;czna rotoskopia i tracking kamery/obiektu tam, gdzie automatyka zawodzi.</div>
+        <div class="cap-desc">Pewno&#347;&#263; ruchu, nawet gdy go nie wida&#263;.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">03</div>
         <div class="cap-name">3D &amp; CG</div>
-        <div class="cap-desc">Modelowanie, o&#347;wietlenie i render dopasowany do plate'u, nie odwrotnie.</div>
+        <div class="cap-desc">Sceny, obiekty i &#347;wiaty zbudowane od zera.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">04</div>
         <div class="cap-name">Matte Painting</div>
-        <div class="cap-desc">Rozszerzanie i przebudowa scenografii tam, gdzie kamera nie mo&#380;e si&#281; myli&#263;.</div>
+        <div class="cap-desc">Wi&#281;cej &#347;wiata poza granic&#261; kadru.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">05</div>
         <div class="cap-name">Clean-up</div>
-        <div class="cap-desc">Usuwanie rig&#243;w, znak&#243;w, ekran&oacute;w — podmiana tre&#347;ci bez &#347;ladu.</div>
+        <div class="cap-desc">Usuwamy to, co nie powinno zosta&#263;.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">06</div>
         <div class="cap-name">Color</div>
-        <div class="cap-desc">Sp&oacute;jno&#347;&#263; koloru mi&#281;dzy uj&#281;ciami, plan&#233;m i CG.</div>
+        <div class="cap-desc">Kolor, kt&oacute;ry trzyma histori&#281; w jednej tonacji.</div>
       </div>
     </div>
   </div>
@@ -637,7 +647,7 @@
       <div class="section-meta">Reklama, film i produkcje muzyczne — pe&#322;ne case studies na &#380;yczenie, pod NDA.</div>
     </div>
     <div class="work-grid">
-      <div class="work-card" style="--sw1:#3a2a1f; --sw2:#0a0a0b;">
+      <div class="work-card" style="--sw1:#123c37; --sw2:#0a0a0b;">
         <div class="swatch"></div>
         <div class="work-info">
           <span class="work-code">SH0530 · REKLAMA</span>
@@ -645,7 +655,7 @@
           <div class="work-type">Compositing · Clean-up</div>
         </div>
       </div>
-      <div class="work-card" style="--sw1:#1f2a3a; --sw2:#0a0a0b;">
+      <div class="work-card" style="--sw1:#155048; --sw2:#0a0a0b;">
         <div class="swatch"></div>
         <div class="work-info">
           <span class="work-code">A0037 · FILM</span>
@@ -653,7 +663,7 @@
           <div class="work-type">Roto &amp; Track · Screen Replace</div>
         </div>
       </div>
-      <div class="work-card" style="--sw1:#2a1f3a; --sw2:#0a0a0b;">
+      <div class="work-card" style="--sw1:#0f2e2a; --sw2:#0a0a0b;">
         <div class="swatch"></div>
         <div class="work-info">
           <span class="work-code">TEST_3D · MUSIC</span>
@@ -661,7 +671,7 @@
           <div class="work-type">3D &amp; CG · Matte Painting</div>
         </div>
       </div>
-      <div class="work-card" style="--sw1:#1f3a2e; --sw2:#0a0a0b;">
+      <div class="work-card" style="--sw1:#1a4a42; --sw2:#0a0a0b;">
         <div class="swatch"></div>
         <div class="work-info">
           <span class="work-code">A0003 · REKLAMA</span>
@@ -685,17 +695,17 @@
       <div class="process-step">
         <div class="step-no">01</div>
         <h3>Wycena i plan</h3>
-        <p>Bid oparty o shotlist, nie o przeczucie — wiesz ile godzin i kiedy dostaniesz pierwszy draft.</p>
+        <p>Od razu rozmawiasz z lud&#378;mi od obrazu i dostajesz konkretny plan.</p>
       </div>
       <div class="process-step">
         <div class="step-no">02</div>
         <h3>Iteracja</h3>
-        <p>Cykliczne review z timecode'owanymi uwagami wprost na materiale — bez zgadywania, o kt&oacute;r&#261; klatk&#281; chodzi.</p>
+        <p>Kr&oacute;tkie p&#281;tle, precyzyjny feedback i decyzje, kt&oacute;re nie trac&#261; energii.</p>
       </div>
       <div class="process-step">
         <div class="step-no">03</div>
         <h3>Dostawa</h3>
-        <p>Finalne mastery w formacie i przestrzeni barw, jakiej potrzebuje Tw&oacute;j monta&#380;/DI.</p>
+        <p>Finalny materia&#322; gotowy do emisji, w formatach, kt&oacute;rych potrzebuje produkcja.</p>
       </div>
     </div>
   </div>
