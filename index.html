@@ -1,5 +1,7 @@
 <meta charset="UTF-8">
-<title>QLIP Redesign</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QLIP VFX — Studio VFX i Motion w Warszawie</title>
+<meta name="description" content="QLIP to warszawskie studio VFX i motion design: compositing, 3D/CG, matte painting, clean-up i color. Ponad 20 lat do&#347;wiadczenia, ma&#322;y zesp&oacute;&#322;, praca bezpo&#347;rednio z lud&#378;mi od obrazu.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
@@ -80,7 +82,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 120px 24px 80px;
+    padding: 120px 24px 116px;
     isolation: isolate;
   }
   .hero-video {
@@ -172,6 +174,14 @@
     display: flex;
     gap: 14px;
     align-items: center;
+  }
+  .hero-locale {
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
   }
   .btn {
     font-family: var(--font-mono);
@@ -302,6 +312,27 @@
   }
   .manifesto-copy p:last-child { margin-bottom: 0; }
   .manifesto-copy strong { color: var(--ink); font-weight: 500; }
+  .manifesto-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 44px;
+  }
+  .manifesto-stat-number {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 1;
+    color: var(--accent);
+  }
+  .manifesto-stat-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
   .manifesto-closer {
     font-family: var(--font-display);
     font-weight: 900;
@@ -468,9 +499,25 @@
     color: var(--bg);
   }
   .cta-title .accent { color: var(--bg); }
+  .cta-subtext {
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--bg);
+    opacity: 0.75;
+  }
+  .cta-actions {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .cta-actions .btn-solid { background: var(--bg); color: var(--accent-2); border-color: var(--bg); }
+  .cta-actions .btn-solid:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .cta-email {
     display: inline-block;
-    margin-top: 32px;
     font-family: var(--font-mono);
     font-size: 16px;
     letter-spacing: 0.04em;
@@ -571,6 +618,7 @@
     <a href="#reel" class="btn btn-solid">Zobacz reel</a>
     <a href="#contact" class="btn btn-ghost">Napisz do nas</a>
   </div>
+  <p class="hero-locale">Warszawa · Polska · Pracujemy też międzynarodowo</p>
   <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
 </header>
 
@@ -590,12 +638,17 @@
       </div>
     </div>
     <div class="manifesto-grid">
-      <p class="manifesto-insight">Klient przychodzi z problemem<br>i u nas — w przeciwie&#324;stwie do molochów — rozmawia z lud&#378;mi, kt&oacute;rzy potrafi&#261; ten problem rozwi&#261;za&#263; kreatywnie, a nie tylko mechanicznie. Technicznie,<br>a potem ci sami ludzie go realizuj&#261;.</p>
+      <p class="manifesto-insight">Ale narzędzia nigdy nie były najważniejsze. Najważniejszy jest pomysł — i to, co trzeba zrobić, żeby zobaczyć go na ekranie.</p>
       <div class="manifesto-copy">
-        <p>Nie jeste&#347;my fabryk&#261; VFX. Od 20 lat robimy rzeczy, na kt&oacute;re wtedy nawet nie by&#322;o jeszcze nazwy — dzi&#347; nazywaj&#261; si&#281; VFX, 3D, compositing, motion, AI. <strong>Narz&#281;dzia si&#281; zmieniaj&#261; nieustannie, talent i zaanga&#380;owanie s&#261; niezmienne.</strong></p>
-        <p>Nie mamy armii producent&oacute;w, pi&#281;ciu szczebli akceptacji i spotka&#324; o spotkaniach — za to mamy ludzi, kt&oacute;rzy odbieraj&#261; telefon od klienta, a chwil&#281; p&oacute;&#378;niej ju&#380; siedz&#261; przy kompozycji, animacji czy renderze, nie gubi&#261;c pomys&#322;u po drodze mi&#281;dzy dzia&#322;ami. Mamy du&#380;e do&#347;wiadczenie zdobyte przy najwi&#281;kszych produkcjach, ale jeste&#347;my mali i elastyczni — z wyboru, nie z przypadku. Mo&#380;emy dzia&#322;a&#263; kameralnie albo zbudowa&#263; zesp&oacute;&#322; pod projekt, kt&oacute;ry wymaga wi&#281;kszej skali. Bez zb&#281;dnej struktury, za to z w&#322;a&#347;ciwymi lud&#378;mi.</p>
-        <p>Lubimy trudne rzeczy. Niemo&#380;liwe jeszcze bardziej. Je&#347;li my&#347;lisz &bdquo;nie wiem, czy da si&#281; to zrobi&#263;&rdquo; — to znaczy, &#380;e dobrze trafi&#322;e&#347;. Nie przywi&#261;zujemy si&#281; do technologii. Bierzemy to, co dzia&#322;a: do&#347;wiadczenie, rzemios&#322;o, VFX, 3D, AI i talent, z pe&#322;n&#261; wolno&#347;ci&#261; my&#347;lenia i sercem w&#322;o&#380;onym w ka&#380;dy projekt.</p>
+        <p>Nie jesteśmy fabryką VFX. Od 20 lat robimy rzeczy, zanim jeszcze było wiadomo, jak je nazwać. Dziś nazywają się VFX, 3D, compositing, motion czy AI.</p>
+        <p>Dlatego lubimy rzeczy trudne. Niemożliwe — jeszcze bardziej.</p>
+        <p>Nie mamy armii ludzi między pomysłem a obrazem. Od briefu do finalnej klatki pracujesz bezpośrednio z ludźmi, którzy ten obraz tworzą. Blisko pomysłu, blisko obrazu, blisko ludzi, którzy go robią.</p>
+        <p>Technologia się zmienia. <strong>Zaangażowanie, z jakim podchodzimy do pracy — nie.</strong></p>
       </div>
+    </div>
+    <div class="manifesto-stat">
+      <span class="manifesto-stat-number">20+</span>
+      <span class="manifesto-stat-label">lat do&#347;wiadczenia<br>w VFX i motion</span>
     </div>
     <div class="manifesto-closer">Ma&#322;a struktura. Du&#380;e do&#347;wiadczenie.<br>Najwi&#281;cej — <span class="accent">dobrego obrazu.</span></div>
   </div>
@@ -634,32 +687,32 @@
       <div class="cap-card">
         <div class="cap-num">01</div>
         <div class="cap-name">Compositing</div>
-        <div class="cap-desc">Obraz sk&#322;ada si&#281; z decyzji. &#321;&#261;czymy je w jedno.</div>
+        <div class="cap-desc">&#321;&#261;czenie CG, uj&#281;&#263; z planu, te&#322; i element&oacute;w praktycznych w jeden, sp&oacute;jny kadr.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">02</div>
         <div class="cap-name">Roto &amp; Tracking</div>
-        <div class="cap-desc">Pewno&#347;&#263; ruchu, nawet gdy go nie wida&#263;.</div>
+        <div class="cap-desc">Precyzyjna rotoskopia i tracking kamery lub obiektu, nawet gdy ruch trudno zobaczy&#263; go&#322;ym okiem.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">03</div>
         <div class="cap-name">3D &amp; CG</div>
-        <div class="cap-desc">Sceny, obiekty i &#347;wiaty zbudowane od zera.</div>
+        <div class="cap-desc">Modelowanie, o&#347;wietlenie i render dopasowane do uj&#281;cia — sceny i obiekty zbudowane od zera.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">04</div>
         <div class="cap-name">Matte Painting</div>
-        <div class="cap-desc">Wi&#281;cej &#347;wiata poza granic&#261; kadru.</div>
+        <div class="cap-desc">Rozszerzanie i przebudowa scenografii cyfrowej poza granic&#261; kadru.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">05</div>
         <div class="cap-name">Clean-up &amp; Screen Replacement</div>
-        <div class="cap-desc">Usuwamy to, co nie powinno zosta&#263;.</div>
+        <div class="cap-desc">Usuwanie rig&oacute;w, znak&oacute;w i ekran&oacute;w — podmiana tre&#347;ci bez &#347;ladu.</div>
       </div>
       <div class="cap-card">
         <div class="cap-num">06</div>
         <div class="cap-name">Color</div>
-        <div class="cap-desc">Kolor, kt&oacute;ry trzyma histori&#281; w jednej tonacji.</div>
+        <div class="cap-desc">Sp&oacute;jno&#347;&#263; koloru mi&#281;dzy uj&#281;ciami, planem i CG w jednej tonacji.</div>
       </div>
     </div>
   </div>
@@ -722,8 +775,8 @@
     <div class="process-strip">
       <div class="process-step">
         <div class="step-no">01</div>
-        <h3>Wycena i plan</h3>
-        <p>Od razu rozmawiasz z lud&#378;mi od obrazu i dostajesz konkretny plan.</p>
+        <h3>Wy&#347;lij nam uj&#281;cie</h3>
+        <p>Masz trudny kadr? Wy&#347;lij, zerkniemy i powiemy wprost, co da si&#281; zrobi&#263;.</p>
       </div>
       <div class="process-step">
         <div class="step-no">02</div>
@@ -743,7 +796,11 @@
   <svg class="cta-ring" viewBox="0 0 24 24" aria-hidden="true"><use href="#ring-mark"></use></svg>
   <div class="wrap">
     <div class="cta-title">Zr&oacute;bmy<br>co&#347; <span class="accent">realnego</span>.</div>
-    <a href="mailto:production@qlipvfx.pl" class="cta-email">production@qlipvfx.pl</a>
+    <p class="cta-subtext">Masz brief, trudne uj&#281;cie albo tylko pomys&#322;?<br>Napisz do nas — zerkniemy.</p>
+    <div class="cta-actions">
+      <a href="mailto:production@qlipvfx.pl" class="btn btn-solid">Zacznij projekt &rarr;</a>
+      <a href="mailto:production@qlipvfx.pl" class="cta-email">production@qlipvfx.pl</a>
+    </div>
   </div>
 </section>
 
