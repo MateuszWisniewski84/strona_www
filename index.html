@@ -335,6 +335,25 @@
     height: 100%;
     border: 0;
   }
+  .reel-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-dim);
+    background: rgba(10,10,11,0.6);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .reel-close:hover { border-color: var(--accent); background: rgba(62,214,196,0.15); }
   .play-btn {
     width: 84px; height: 84px;
     border-radius: 50%;
@@ -770,15 +789,32 @@
     var reelBtn = document.getElementById('reelPlayBtn');
     var reelMeta = document.getElementById('reelMeta');
     var ytId = reelFrame.getAttribute('data-yt');
+    var closeBtn = null;
+    var iframe = null;
+
+    function stopReel() {
+      if (iframe) { iframe.remove(); iframe = null; }
+      if (closeBtn) { closeBtn.remove(); closeBtn = null; }
+      reelBtn.style.display = '';
+      if (reelMeta) reelMeta.style.display = '';
+    }
+
     reelBtn.addEventListener('click', function () {
-      var iframe = document.createElement('iframe');
+      iframe = document.createElement('iframe');
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + ytId + '?autoplay=1&rel=0&modestbranding=1';
       iframe.title = 'QLIP Reel';
       iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
       iframe.allowFullscreen = true;
       reelFrame.appendChild(iframe);
-      reelBtn.remove();
-      if (reelMeta) reelMeta.remove();
+      reelBtn.style.display = 'none';
+      if (reelMeta) reelMeta.style.display = 'none';
+
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'reel-close';
+      closeBtn.setAttribute('aria-label', 'Zamknij reel');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', stopReel);
+      reelFrame.appendChild(closeBtn);
     });
   })();
 
