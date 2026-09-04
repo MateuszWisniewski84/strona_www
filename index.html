@@ -519,6 +519,21 @@
     section { padding: 90px 0; }
   }
 
+  @media (max-width: 640px) {
+    nav {
+      flex-wrap: wrap;
+      row-gap: 10px;
+      padding: 16px 20px;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      mix-blend-mode: normal;
+    }
+    .nav-mark { font-size: 11px; }
+    .nav-links { gap: 16px; font-size: 10px; }
+    .hero { padding-top: 170px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ticker-track, .scroll-cue .line, .reel-meta .rec::before { animation: none !important; }
   }
@@ -529,7 +544,6 @@
   <div class="nav-links">
     <a href="#manifesto">Manifest</a>
     <a href="#reel">Reel</a>
-    <a href="#work">Work</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
@@ -597,7 +611,7 @@
       <div class="section-meta">Wybrane uj&#281;cia z ostatnich produkcji reklamowych i filmowych. Pe&#322;ny reel na &#380;yczenie.</div>
     </div>
     <div class="reel-frame" id="reelFrame">
-      <video class="reel-video" muted loop playsinline preload="none">
+      <video class="reel-video" muted loop playsinline webkit-playsinline="true" preload="metadata">
         <source src="/assets/poziom.mp4" type="video/mp4">
       </video>
       <div class="play-btn" id="reelPlayBtn">
@@ -655,7 +669,7 @@
   </div>
 </section>
 
-<section id="work">
+<section id="work" style="display:none;">
   <div class="wrap">
     <div class="section-head">
       <div>
@@ -705,7 +719,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 05 / PROCES ]</div>
+        <div class="section-index">[ 04 / PROCES ]</div>
         <div class="section-title">Jak <span class="accent">pracujemy</span></div>
       </div>
     </div>
@@ -751,7 +765,8 @@
     function toggleReel() {
       if (reelVideo.paused) {
         reelFrame.classList.add('playing');
-        reelVideo.play();
+        var p = reelVideo.play();
+        if (p && p.catch) { p.catch(function () { reelFrame.classList.remove('playing'); }); }
       } else {
         reelVideo.pause();
         reelFrame.classList.remove('playing');
