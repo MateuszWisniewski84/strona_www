@@ -314,6 +314,18 @@
     inset: 0;
     background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 48px);
   }
+  .reel-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .reel-frame.playing .reel-video { opacity: 1; pointer-events: auto; }
+  .reel-frame.playing .play-btn { opacity: 0; pointer-events: none; }
   .play-btn {
     width: 84px; height: 84px;
     border-radius: 50%;
@@ -322,8 +334,9 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.25s, border-color 0.25s, background 0.25s;
+    transition: transform 0.25s, border-color 0.25s, background 0.25s, opacity 0.25s;
     background: rgba(10,10,11,0.4);
+    z-index: 2;
     backdrop-filter: blur(6px);
   }
   .play-btn:hover { transform: scale(1.08); border-color: var(--accent); background: rgba(62,214,196,0.12); }
@@ -344,7 +357,7 @@
   /* ---------- CAPABILITIES ---------- */
   .cap-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -494,6 +507,7 @@
   @media (max-width: 860px) {
     .manifesto-grid { grid-template-columns: 1fr; gap: 32px; }
     .manifesto-insight { position: static; }
+    .cap-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (max-width: 720px) {
@@ -501,6 +515,7 @@
     .section-meta { text-align: left; max-width: none; }
     .work-grid { grid-template-columns: 1fr; }
     .process-strip { grid-template-columns: 1fr; gap: 48px; }
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
     section { padding: 90px 0; }
   }
 
@@ -581,8 +596,11 @@
       </div>
       <div class="section-meta">Wybrane uj&#281;cia z ostatnich produkcji reklamowych i filmowych. Pe&#322;ny reel na &#380;yczenie.</div>
     </div>
-    <div class="reel-frame">
-      <div class="play-btn">
+    <div class="reel-frame" id="reelFrame">
+      <video class="reel-video" muted loop playsinline preload="none">
+        <source src="/assets/poziom.mp4" type="video/mp4">
+      </video>
+      <div class="play-btn" id="reelPlayBtn">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="#f2ede2"><path d="M8 5v14l11-7z"/></svg>
       </div>
       <div class="reel-meta">
@@ -726,6 +744,23 @@
 </footer>
 
 <script>
+  (function () {
+    var reelFrame = document.getElementById('reelFrame');
+    var reelBtn = document.getElementById('reelPlayBtn');
+    var reelVideo = reelFrame.querySelector('.reel-video');
+    function toggleReel() {
+      if (reelVideo.paused) {
+        reelFrame.classList.add('playing');
+        reelVideo.play();
+      } else {
+        reelVideo.pause();
+        reelFrame.classList.remove('playing');
+      }
+    }
+    reelBtn.addEventListener('click', toggleReel);
+    reelVideo.addEventListener('click', toggleReel);
+  })();
+
   (function () {
     var canvas = document.getElementById('grain');
     var ctx = canvas.getContext('2d');
