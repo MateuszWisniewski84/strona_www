@@ -52,13 +52,12 @@
     align-items: center;
     gap: 8px;
   }
-  .nav-mark::before {
-    content: '';
-    width: 7px; height: 7px;
-    background: var(--accent);
-    border-radius: 50%;
-    display: inline-block;
+  .ring-mark {
+    width: 15px; height: 15px;
+    color: var(--accent);
+    flex-shrink: 0;
   }
+  .ring-mark--sm { width: 11px; height: 11px; }
   .nav-links {
     display: flex;
     gap: 28px;
@@ -104,6 +103,17 @@
     inset: 0;
     z-index: -1;
     opacity: 0.35;
+  }
+  .hero-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(62vw, 820px);
+    height: min(62vw, 820px);
+    color: var(--accent);
+    opacity: 0.16;
+    z-index: -1;
+    pointer-events: none;
   }
   .hero::after {
     content: '';
@@ -233,6 +243,9 @@
     font-size: 12px;
     color: var(--ink-faint);
     letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .section-title {
     font-family: var(--font-display);
@@ -421,11 +434,25 @@
 
   /* ---------- CTA / FOOTER ---------- */
   .cta {
+    position: relative;
     text-align: center;
     padding: 160px 0 140px;
     background: var(--accent);
     color: var(--bg);
+    overflow: hidden;
   }
+  .cta-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(52vw, 680px);
+    height: min(52vw, 680px);
+    color: var(--bg);
+    opacity: 0.16;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .cta .wrap { position: relative; z-index: 1; }
   .cta-title {
     font-family: var(--font-display);
     font-weight: 900;
@@ -461,7 +488,6 @@
     letter-spacing: 0.06em;
   }
   footer .fmark { display: flex; align-items: center; gap: 8px; }
-  footer .fmark::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
 
   @media (max-width: 860px) {
     .manifesto-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -498,8 +524,18 @@
   }
 </style>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ring-mark" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.3"/>
+    <circle cx="12" cy="12" r="8.3" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+    <circle cx="12" cy="12" r="5.8" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.6"/>
+    <circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.8"/>
+    <circle cx="12" cy="12" r="1.3" fill="currentColor"/>
+  </symbol>
+</svg>
+
 <nav>
-  <div class="nav-mark">QLIP · MOTION + VFX</div>
+  <div class="nav-mark"><svg class="ring-mark"><use href="#ring-mark"></use></svg>QLIP · MOTION + VFX</div>
   <div class="nav-links">
     <a href="#manifesto">Manifest</a>
     <a href="#reel">Reel</a>
@@ -517,6 +553,7 @@
     </video>
   </div>
   <canvas id="grain"></canvas>
+  <svg class="hero-ring" viewBox="0 0 24 24" aria-hidden="true"><use href="#ring-mark"></use></svg>
   <div class="eyebrow">Warszawa · Studio VFX &amp; motion &nbsp;<strong>— dost&#281;pni od zaraz</strong></div>
   <h1 class="wordmark">
     <span class="echo">qlip</span>
@@ -544,7 +581,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 01 / MANIFEST ]</div>
+        <div class="section-index"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>[ 01 / MANIFEST ]</div>
         <div class="section-title echo-title">Do&#347;wiadczenie du&#380;ego studia.<br>Uwa&#380;no&#347;&#263; ma&#322;ego <span class="accent">butiku</span>.</div>
       </div>
     </div>
@@ -564,7 +601,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 02 / DEMO REEL ]</div>
+        <div class="section-index"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>[ 02 / DEMO REEL ]</div>
         <div class="section-title">Zobacz w <span class="accent">ruchu</span></div>
       </div>
       <div class="section-meta">Wybrane uj&#281;cia z ostatnich produkcji reklamowych i filmowych. Pe&#322;ny reel na &#380;yczenie.</div>
@@ -584,7 +621,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 03 / CAPABILITIES ]</div>
+        <div class="section-index"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>[ 03 / CAPABILITIES ]</div>
         <div class="section-title">Co <span class="accent">robimy</span></div>
       </div>
       <div class="section-meta">Ma&#322;y, doświadczony zesp&oacute;&#322; — bez dopisywania w &#322;a&#324;cuchu podwykonawc&oacute;w.</div>
@@ -628,7 +665,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 04 / SELECTED WORK ]</div>
+        <div class="section-index"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>[ 04 / SELECTED WORK ]</div>
         <div class="section-title">Wybrane <span class="accent">produkcje</span></div>
       </div>
       <div class="section-meta">Reklama, film i produkcje muzyczne — pe&#322;ne case studies na &#380;yczenie, pod NDA.</div>
@@ -674,7 +711,7 @@
   <div class="wrap">
     <div class="section-head">
       <div>
-        <div class="section-index">[ 04 / PROCES ]</div>
+        <div class="section-index"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>[ 04 / PROCES ]</div>
         <div class="section-title">Jak <span class="accent">pracujemy</span></div>
       </div>
     </div>
@@ -699,6 +736,7 @@
 </section>
 
 <section class="cta" id="contact">
+  <svg class="cta-ring" viewBox="0 0 24 24" aria-hidden="true"><use href="#ring-mark"></use></svg>
   <div class="wrap">
     <div class="cta-title">Zr&oacute;bmy<br>co&#347; <span class="accent">realnego</span>.</div>
     <a href="mailto:production@qlipvfx.pl" class="cta-email">production@qlipvfx.pl</a>
@@ -707,7 +745,7 @@
 
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
-    <div class="fmark">QLIP STUDIO — MOTION + VFX</div>
+    <div class="fmark"><svg class="ring-mark ring-mark--sm"><use href="#ring-mark"></use></svg>QLIP STUDIO — MOTION + VFX</div>
     <div>&copy; 2026 · WARSZAWA, PL</div>
   </div>
 </footer>
